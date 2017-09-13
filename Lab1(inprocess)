@@ -1,39 +1,50 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+
 using namespace std;
 
 int main()
 {
 	ifstream readFile;
 	string fileName;
-	int count=1;
+	int count = 1;
 	double number;
 	double value1, value2, value3, value4;
-
-	cout << "Enter a file name:     ";
+	
+	//Get name of file from user
+	cout << "Enter a file name: ";
 	getline(cin, fileName);
 
 	readFile.open(fileName);
 
-	if (readFile.fail())
+	//Make sure the file is open
+	while (readFile.fail())
 	{
 		cerr << "Error opening file." << endl;
 		exit(1);
 	}
 
+	//Count the numbers in the file and sets contents in last two positions
 	readFile >> number;
 	while (readFile.good())
 	{
+		value3 = number;
 		readFile >> number;
+		value4 = number;
 		count++;
 	}
-	
-	readFile.seekg(0, ios::beg) = value1;
-	readFile.seekg(1, ios::beg) = value2;
-	readFile.seekg(1, ios::end) = value3;
-	readFile.seekg(0, ios::end) = value4;
 
+	//Sets contents in first two positions
+	readFile.seekg(0, ios::beg);
+	readFile >> number;
+	value1 = number;
+	readFile.seekg(2, ios::beg);
+	readFile >> number;
+	value2 = number;
+
+	
+	//Print the results
 	cout << "There are " << count << " numbers in the file." << endl;
 	cout << "The first two numbers are " << value1 << " and " << value2 << endl;
 	cout << "The last two numbers are " << value3 << " and " << value4 << endl;
@@ -42,4 +53,3 @@ int main()
 
 	return 0;
 }
-
